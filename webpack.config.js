@@ -1,14 +1,14 @@
-var path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
-var DIST_PATH = path.join(__dirname, 'dist');
-var APP_PATH = path.join(__dirname, 'app');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
+const DIST_PATH = path.join(__dirname, 'dist');
+const APP_PATH = path.join(__dirname, 'app');
 
 module.exports = {
     devtool: 'cheap-module-source-map',
     entry: {
         app: APP_PATH + '/index.js',
-        vendor: 'lodash'
+        vendor: ['react', 'react-dom', 'react-router']
     },
     output: {
         path: DIST_PATH,
@@ -18,16 +18,21 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 include: APP_PATH,
+                exclude: '/node_modules/',
                 loader: 'babel-loader',
                 options: {
-                    presets: ['es2015']
+                    presets: ['es2015', 'react']
                 }
             },
             {
                 test: /\.scss$/,
-                loader: 'style-loader!css-loader?sourceMap!sass-loader'
+                use: [
+                    {loader: "style-loader"},
+                    {loader: "css-loader"},
+                    {loader: "sass-loader"}
+                ]
             }
         ]
     },
@@ -45,5 +50,5 @@ module.exports = {
         contentBase: DIST_PATH,
         inline: true,
         compress: true
-    },
+    }
 };
