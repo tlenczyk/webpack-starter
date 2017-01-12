@@ -4,6 +4,7 @@ Starter project with Webpack 2.x setup
 
 **It includes**
 
+- React, React Router
 - babel loader
 - sass loader
 - source maps
