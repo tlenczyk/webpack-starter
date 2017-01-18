@@ -53,6 +53,7 @@ module.exports = {
     devServer: {
         contentBase: DIST_PATH,
         inline: true,
-        compress: true
+        compress: true,
+        port: 9000
     }
 };
