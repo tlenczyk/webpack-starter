@@ -4,6 +4,7 @@ const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 const DIST_PATH = path.join(__dirname, 'dist');
 const APP_PATH = path.join(__dirname, 'app');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 
 module.exports = {
     devtool: 'cheap-module-source-map',
@@ -49,6 +50,12 @@ module.exports = {
             names: ['vendor', 'bootstraper']
         }),
         new ExtractTextPlugin("[name].css"),
+        new UglifyJsPlugin({
+            sourceMap: 'source-map',
+            compress: {
+                warnings: false
+            }
+        })
     ],
     devServer: {
         contentBase: DIST_PATH,
