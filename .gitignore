@@ -1,4 +1,5 @@
-/src/main/frontend/dist/
 .idea/
-/src/main/frontend/node_modules/
 /target/
+/src/main/frontend/dist/
+/src/main/frontend/node_modules/
+/src/main/resources/static/*.*

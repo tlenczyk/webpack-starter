@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "build": "./node_modules/.bin/webpack --progress",
-    "start": "./node_modules/.bin/webpack-dev-server"
-  },
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -32,5 +28,14 @@
     "react-dom": "^15.4.2",
     "react-router": "^3.0.2",
     "react-toolbox": "^2.0.0-beta.4"
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/webpack --progress",
+    "start": "./node_modules/.bin/webpack-dev-server",
+    "clean-frontend": "rm -f dist/*.*",
+    "clean-boot-frontend": "rm -f ../resources/static/*.*",
+    "copy-all": "cp dist/*.* ../resources/static",
+    "clean-all": "npm run clean-frontend && npm run clean-boot-frontend",
+    "build-prod": "npm run clean-all && npm run build && npm run copy-all"
   }
 }
