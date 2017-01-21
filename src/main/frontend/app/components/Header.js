@@ -13,7 +13,7 @@ export default class Header extends React.Component {
             <AppBar class="header" title="React Toolbox" leftIcon='menu'>
                 <Navigation class="navigation" type='horizontal'>
                     <Link class="link" to="/">Home</Link>
-                    <Link to="about">About</Link>
+                    <Link class="link" to="about">About</Link>
                 </Navigation>
             </AppBar>
         );

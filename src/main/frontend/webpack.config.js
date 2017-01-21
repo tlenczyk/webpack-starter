@@ -7,7 +7,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 
 module.exports = {
-    devtool: 'cheap-module-source-map',
+    devtool: 'source-map',
     entry: {
         app: APP_PATH + '/index.js',
         vendor: ['react', 'react-dom', 'react-router']
@@ -25,11 +25,17 @@ module.exports = {
                 exclude: '/node_modules/',
                 loader: 'babel-loader',
                 options: {
-                    presets: ['es2015', 'react']
+                    presets: [['es2015', {modules: false}], 'react']
                 }
             },
             {
+                test: /\.s?css$/,
+                loaders: ['style-loader', 'css-loader', 'sass-loader'],
+                exclude: /(node_modules)\/react-toolbox/
+            },
+            {
                 test: /(\.scss|\.css)$/,
+                include : /(node_modules)\/react-toolbox/,
                 loader: ExtractTextPlugin.extract({
                     fallbackLoader: 'style-loader',
                     loader: [
@@ -51,9 +57,11 @@ module.exports = {
         }),
         new ExtractTextPlugin("[name].css"),
         new UglifyJsPlugin({
-            sourceMap: 'source-map',
+            sourceMap: true,
             compress: {
-                warnings: false
+                warnings: false,
+                unused: true,
+                dead_code: true
             }
         })
     ],
