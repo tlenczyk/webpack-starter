@@ -10,7 +10,7 @@ module.exports = {
     devtool: 'source-map',
     entry: {
         app: APP_PATH + '/index.js',
-        vendor: ['react', 'react-dom', 'react-router']
+        vendor: ['react', 'react-dom', 'react-router', 'redux', 'react-redux', 'redux-thunk', 'redux-logger']
     },
     output: {
         path: DIST_PATH,
@@ -25,7 +25,8 @@ module.exports = {
                 exclude: '/node_modules/',
                 loader: 'babel-loader',
                 options: {
-                    presets: [['es2015', {modules: false}], 'react']
+                    presets: [['es2015', {modules: false}], 'react', 'stage-0'],
+                    plugins: ['transform-decorators-legacy', 'react-html-attrs']
                 }
             },
             {
@@ -69,6 +70,9 @@ module.exports = {
         contentBase: DIST_PATH,
         inline: true,
         compress: true,
-        port: 9000
+        port: 9000,
+        proxy: {
+            "/api": "http://localhost:8080"
+        }
     }
 };
