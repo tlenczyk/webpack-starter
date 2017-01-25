@@ -4,9 +4,11 @@ Starter project with Webpack 2.x setup
 
 **It includes**
 
-- React, React Router
+- React, React Router, 
+- react-toolbox
+- redux
 - babel loader
-- sass loader
+- postcss loader
 - source maps
 - 3 JavaScripts modules: app, vendor, bootstraper
 - hashing
