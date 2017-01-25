@@ -1,11 +1,15 @@
+:root{
+    --margin: 10px
+}
+
 body {
     margin: 0;
 }
 
 .card-item {
-    margin-top: 10px
+    margin-top: var(--margin)
 }
 
 .navigation .link {
-    padding-left: 10px;
+    padding-left: var(--margin);
 }

@@ -5,6 +5,7 @@ const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 const DIST_PATH = path.join(__dirname, 'dist');
 const APP_PATH = path.join(__dirname, 'app');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     devtool: 'source-map',
@@ -32,11 +33,13 @@ module.exports = {
             {
                 test: /\.css$/,
                 exclude: /(node_modules)\/react-toolbox/,
-                loaders: ['style-loader', 'css-loader', 'postcss-loader']
+                loader: ExtractTextPlugin.extract({
+                    loader: 'css-loader?importLoaders=1!postcss-loader'
+                })
             },
             {
                 test: /\.css$/,
-                include : /(node_modules)\/react-toolbox/,
+                include: /(node_modules)\/react-toolbox/,
                 use: [
                     "style-loader",
                     {
@@ -72,7 +75,8 @@ module.exports = {
                 unused: true,
                 dead_code: true
             }
-        })
+        }),
+        new ExtractTextPlugin('[name].styles.css')
     ],
     devServer: {
         contentBase: DIST_PATH,
