@@ -1,9 +1,9 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CommonsChunkPlugin = require("webpack/lib/optimize/CommonsChunkPlugin");
 const DIST_PATH = path.join(__dirname, 'dist');
 const APP_PATH = path.join(__dirname, 'app');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 
 module.exports = {
@@ -30,20 +30,26 @@ module.exports = {
                 }
             },
             {
-                test: /\.s?css$/,
-                loaders: ['style-loader', 'css-loader', 'sass-loader'],
-                exclude: /(node_modules)\/react-toolbox/
+                test: /\.css$/,
+                exclude: /(node_modules)\/react-toolbox/,
+                loaders: ['style-loader', 'css-loader', 'postcss-loader']
             },
             {
-                test: /(\.scss|\.css)$/,
+                test: /\.css$/,
                 include : /(node_modules)\/react-toolbox/,
-                loader: ExtractTextPlugin.extract({
-                    fallbackLoader: 'style-loader',
-                    loader: [
-                        'css-loader?sourceMap&modules&importLoaders=2&localIdentName=[name]__[local]___[hash:base64:5]',
-                        'sass-loader?sourceMap&sourceMapContents&outputStyle=expanded',
-                    ],
-                })
+                use: [
+                    "style-loader",
+                    {
+                        loader: "css-loader",
+                        options: {
+                            modules: true,
+                            sourceMap: true,
+                            importLoaders: 1,
+                            localIdentName: "[name]--[local]--[hash:base64:8]"
+                        }
+                    },
+                    "postcss-loader"
+                ]
             }
         ]
     },
@@ -56,7 +62,9 @@ module.exports = {
         new CommonsChunkPlugin({
             names: ['vendor', 'bootstraper']
         }),
-        new ExtractTextPlugin("[name].css"),
+        new webpack.LoaderOptionsPlugin({
+            debug: true
+        }),
         new UglifyJsPlugin({
             sourceMap: true,
             compress: {

@@ -8,7 +8,7 @@ import ItemDetails from './pages/ItemDetails';
 import {Provider} from 'react-redux';
 import store from './redux/store'
 
-import './css/style.scss';
+import './css/style.css';
 
 ReactDOM.render(
     <Provider store={store}>
